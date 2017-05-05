@@ -4,7 +4,7 @@ Code for hepatitis C in young persons who inject drugs (PWID). This is the sourc
 
 A Dynamic Modeling Approach using State-Level Public Health Surveillance Data to Understand Transmission of Hepatitis C in Young Persons who Inject Drugs in Michigan, 2000-2013. Rachel E. Gicquelais, Joseph R. Coyle, Betsy Foxman, and Marisa C. Eisenberg. In prep. 
 
-Questions? Contact Marisa Eisenberg (marisae@umich.edu) and/or Rachel Gicquelais (rgic@umich.edu).
+Questions? Contact Marisa Eisenberg (marisae@umich.edu) and Rachel Gicquelais (rgic@umich.edu).
 
 The code given here simulates a model of hepatitis C transmission fit to hepatitis C surveillance data from the Michigan Department of Health and Human Services during 2000-2013 among PWID aged 15-30 years. To run, start with HCV_MS_0420.2017.m.
 
