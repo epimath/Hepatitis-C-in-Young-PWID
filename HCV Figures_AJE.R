@@ -35,8 +35,12 @@ grid_arrange_shared_legend <- function(...) {
 }
 
 
+
+
 ################ Section 2: Set Working Directory ################
 setwd("/Users/RGicquelais/Desktop/HCV/MDCH Young HCV Modeling/Figures and Datasets/Final 4.20.2017")
+
+
 
 
 ############### Section 3: Importing Data Generated from Matlab ################
@@ -370,15 +374,13 @@ singleint$IntLevelpct<-ifelse(singleint$e==1,"None",
 table(singleint$IntLevelpct)
 
 #Set an order variable to determine plotting order in graphs
-singleint$order<-factor(ifelse(singleint$InterventionParam=="gn",1,ifelse(singleint$InterventionParam=="gn_s",2,
-                  ifelse(singleint$InterventionParam=="gp",3,ifelse(singleint$InterventionParam=="gp_s",4,
-                  ifelse(singleint$InterventionParam=="k",5,ifelse(singleint$InterventionParam=="d",6,
-                  ifelse(singleint$InterventionParam=="contact",7, ifelse(singleint$InterventionParam=="phi",8,
-                  ifelse(singleint$InterventionParam=="etap",9,ifelse(singleint$InterventionParam=="etan",10,
-                  ifelse(singleint$InterventionParam=="None",11,9999))))))))))))
+singleint$order<-factor(ifelse(singleint$InterventionParam=="None",1,ifelse(singleint$InterventionParam=="phi",2,
+                  ifelse(singleint$InterventionParam=="contact",3,ifelse(singleint$InterventionParam=="d",4,
+                  ifelse(singleint$InterventionParam=="k",5,ifelse(singleint$InterventionParam=="gp",6,
+                  ifelse(singleint$InterventionParam=="gp_s",7, ifelse(singleint$InterventionParam=="gn",8,
+                  ifelse(singleint$InterventionParam=="gn_s",9,ifelse(singleint$InterventionParam=="etap",10,
+                  ifelse(singleint$InterventionParam=="etan",11,9999))))))))))))
 table(singleint$order)
-
-
 
 #Seqint Formatting
 
@@ -505,6 +507,11 @@ summary(seqint2$minpctred_chr)
 summary(seqint2$minpctred_new)
 summary(seqint2$maxpctred_chr)
 summary(seqint2$maxpctred_new)
+
+
+
+
+
 
 
 
@@ -1555,7 +1562,7 @@ p6<-ggplot(params) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
   theme(legend.position = "none", legend.key = element_rect(colour = 'black')) +
   scale_fill_manual(name=NULL, values = model.colors, breaks=c(1,2,3,4),labels=c("Q1","Q2","Q3","Q4"))+
-  ylab("") +
+  ylab(text.ylab) +
   xlab(text.xlab) +
   scale_x_log10()+
   scale_y_continuous(limits=c(0,1500), breaks=c(0,500,1000,1500), labels=c("0","500","1,000","1,500"))+
@@ -1643,7 +1650,7 @@ p11<-ggplot(params) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
   theme(legend.position = "none", legend.key = element_rect(colour = 'black')) +
   scale_fill_manual(name=NULL, values = model.colors, breaks=c(1,2,3,4),labels=c("Q1","Q2","Q3","Q4"))+
-  ylab(text.ylab) +
+  ylab("") +
   xlab(text.xlab) +
   scale_x_continuous(limits = c(75,85), breaks = c(75, 80, 85))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
@@ -1823,7 +1830,7 @@ p21<-ggplot(params) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
   theme(legend.position = "none", legend.key = element_rect(colour = 'black')) +
   scale_fill_manual(name=NULL, values = model.colors, breaks=c(1,2,3,4),labels=c("Q1","Q2","Q3","Q4"))+
-  ylab(text.ylab) +
+  ylab("") +
   xlab(text.xlab) +
   scale_x_continuous(limits = c(46.3,64.3), breaks = c(50,60))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
@@ -1841,7 +1848,7 @@ p22<-ggplot(params) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
   theme(legend.position = "none", legend.key = element_rect(colour = 'black')) +
   scale_fill_manual(name=NULL, values = model.colors, breaks=c(1,2,3,4),labels=c("Q1","Q2","Q3","Q4"))+
-  ylab("") +
+  ylab(text.ylab) +
   xlab(text.xlab) +
   scale_x_continuous(limits = c(83.5,99.2), breaks = c(85,95))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
@@ -1877,7 +1884,7 @@ p24<-ggplot(params) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
   theme(legend.position = "none", legend.key = element_rect(colour = 'black')) +
   scale_fill_manual(name=NULL, values = model.colors, breaks=c(1,2,3,4),labels=c("Q1","Q2","Q3","Q4"))+
-  ylab("") +
+  ylab(text.ylab) +
   xlab(text.xlab) +
   scale_x_continuous(limits = c(2.5,15.5), breaks = c(5,10,15))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
@@ -1921,6 +1928,18 @@ p26<-ggplot(params) +
 
 #Note: quartz works for saving unicode text as pdf (ggsave does not)
 
+#Supp Figure: All
+w <- 16; h <- 18
+mylegend<-g_legend(p1)
+lay<-rbind(c(1,2,3), c(1,2,3), c(1,2,3), c(4,5,6), c(4,5,6), c(4,5,6), 
+           c(7,8,9), c(7,8,9), c(7,8,9), c(10,11,12), c(10,11,12), c(10,11,12),
+           c(13,14,15),c(13,14,15),c(13,14,15),c(16,17,18),c(16,17,18),c(16,17,18),
+           c(19,20,21),c(19,20,21),c(19,20,21),c(22,23,24),c(22,23,24),c(22,23,24), c(25,25,25))
+options(device = "quartz")
+LHS_Histograms<-grid.arrange(p10,p12,p13,p9,p7,p8,p15,p16,p17,p18,p19,p20,
+                             p3,p4,p5,p6,p11,p14,p24,p25,p21,p22,p23,p26,mylegend,layout_matrix=lay)
+quartz.save ("LHS_Histograms_Grey_All.pdf", "pdf",width=w,height=h)
+
 #Main Figure: Non-Uniformly Distributed and Contact Parameters 
 w <- 20; h <- 12
 mylegend<-g_legend(p1)
@@ -1928,8 +1947,7 @@ mylegend<-g_legend(p1)
 lay<-rbind(c(1,2,3), c(1,2,3), c(1,2,3), c(4,5,6), c(4,5,6), c(4,5,6), 
            c(7,8,9), c(7,8,9), c(7,8,9), c(10,11,12), c(10,11,12), c(10,11,12),
            c(13,13,13))
-options(device = "quartz")
-LHS_Histograms<-grid.arrange(p10,p12,p13,p9,p7,p8,p15,p16,p17,p18,p19,p20,mylegend,layout_matrix=lay)
+LHS_Histograms_All<-grid.arrange(p10,p12,p13,p9,p7,p8,p15,p16,p17,p18,p19,p20,mylegend,layout_matrix=lay)
 quartz.save ("LHS_Histograms_Grey.pdf", "pdf",width=w,height=h)
 
 #Non-Uniformly Distributed Params
@@ -2230,27 +2248,38 @@ summary(best25[,2:36])
 
 
 
+
 ################ Section 5 Figures: Intervention Simulation Results ################
 #### Violin Plots of Best 50% Fits of Single Interventions ####
 #Set plot labels and colors
 text.xlab <- "Intervention"
-model.colors <- c('#CCCCCC', '#999999', '#666666', '#000000','#FFFFFF') #grey scheme
+model.colors4 <- c('#CCCCCC', '#999999', '#666666', '#000000','#FFFFFF') #grey scheme
+model.colors <- c('#CCCCCC', '#666666', '#000000','#FFFFFF') #grey scheme
 
+table(singleint$order)
+table(singleint$IntLevelpct)
 
 #X labels
-xlabelsall <-paste0(c("Former PWID Treatment, 1 Year","Former PWID Treatment, 12 Weeks",
-                      "Current PWID Treatment, 1 Year","Current PWID Treatment, 12 Weeks",
-                      "Decreased Relapse","Increased Cessation", 
-                      "Decreased Effective Contacts","Decreased Injection Initiation",
-                      "Decreased Mortality, Current PWID","Decreased Mortality, Former PWID","None"))
+xlabelsmain <-paste0(c("None","Decrease Injection Initiation",
+                       "Decrease Current PWID Contacts",
+                       "Increase Current PWID Cessation", 
+                       "Decrease Former PWID Relapse",
+                       "Treat Current PWID",
+                       "Treat Former PWID"))
 
+#create new variable to force none to plot 1st in legend as white color (as actual plots do below)
+singleint$plotleg<-ifelse(singleint$IntLevelpct=="None",1,ifelse(singleint$IntLevelpct=="10%",2,
+                   ifelse(singleint$IntLevelpct=="20%",3,4)))
+singleint$type<-ifelse(singleint$order==1,"None",ifelse(singleint$order==2,"Primary",
+                ifelse(singleint$order %in% c(3,4,5),"Secondary","Tertiary")))
+  
 #plot for legend
 text.ylab <- "Chronic HCV Prevalence"
-leg<-ggplot(subset(singleint,singleint$order!=9999&singleint$best50==1), 
-            aes(x=order, y=ChronicPrev_End, by=IntLevelpct)) + 
-  geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
-  scale_fill_manual(values=model.colors, name='Intervention Level') +
-  scale_x_discrete(labels=c("","","","","","","","","","",""))+ 
+leg<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1:6,8)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
+           aes(x=order, y=ChronicPrev_End, by=IntLevelpct)) + 
+  geom_violin(aes(fill=as.factor(plotleg)), position=position_dodge(width=0.95), trim=TRUE) +
+  scale_fill_manual(values=c('#FFFFFF','#CCCCCC', '#666666', '#000000'), name='Intervention Level', labels=c("None","10%","20%","40%")) +
+  scale_x_discrete(labels=c("","","","","","",""))+ 
   scale_y_continuous(limits=c(0,4400),breaks=c(0,1000,2000,3000,4000),labels=c("0","1,000","2,000","3,000","4,000"))+
   stat_summary(aes(group=IntLevelpct), fun.y=median, geom="point", shape=23, size=2, fill= "white", position=position_dodge(width=0.95)) +
   theme_bw(base_size=16) +
@@ -2260,19 +2289,22 @@ leg<-ggplot(subset(singleint,singleint$order!=9999&singleint$best50==1),
   xlab("") 
 leg
 
+#None, Prevalence
 text.ylab <- "Chronic HCV Prevalence"
-p1<-ggplot(subset(singleint,singleint$order!=9999&singleint$best50==1), 
+p1<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
            aes(x=order, y=ChronicPrev_End, by=IntLevelpct)) + 
   geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
   scale_fill_manual(values=model.colors, name='Intervention Level') +
-  scale_x_discrete(labels=c("","","","","","","","","","",""))+ 
+  scale_x_discrete(labels="None")+ 
   scale_y_continuous(limits=c(0,4400),breaks=c(0,1000,2000,3000,4000),labels=c("0","1,000","2,000","3,000","4,000"))+
   stat_summary(aes(group=IntLevelpct), fun.y=median, geom="point", shape=23, size=2, fill= "white", position=position_dodge(width=0.95)) +
   theme_bw(base_size=16) +
   theme(legend.position = "none", legend.key = element_rect(colour = 'black'),axis.ticks.x=element_blank()) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
   ylab(text.ylab) +
-  xlab("") 
+  xlab("")+
+  ggtitle("None")+
+  theme(plot.title = element_text(hjust = 0.5))
 
 title.grob <- textGrob(label = "A)",x = unit(0, "lines"), y = unit(0, "lines"),
                        hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
@@ -2280,64 +2312,72 @@ title.grob <- textGrob(label = "A)",x = unit(0, "lines"), y = unit(0, "lines"),
 p1 <- arrangeGrob(p1, top = title.grob)
 grid.arrange(p1)
 
-
-text.ylab <- "New Chronic HCV Cases"
-p2<-ggplot(subset(singleint,singleint$order!=9999&singleint$best50==1), 
-           aes(x=order, y=NewChronic_End, by=IntLevelpct)) + 
+#Primary, Prevalence
+text.ylab <- "Chronic HCV Prevalence"
+p2<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(2)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
+           aes(x=order, y=ChronicPrev_End, by=IntLevelpct)) + 
   geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
   scale_fill_manual(values=model.colors, name='Intervention Level') +
-  scale_x_discrete(labels=xlabelsall)+ 
-  scale_y_continuous(limits=c(0,1150),breaks=c(0,300,600,900),labels=c("0","300","600","900"))+
+  scale_x_discrete(labels="Decrease Injection Initiation")+ 
+  scale_y_continuous(limits=c(0,4400),breaks=c(0,1000,2000,3000,4000),labels=c("","","","",""))+
   stat_summary(aes(group=IntLevelpct), fun.y=median, geom="point", shape=23, size=2, fill= "white", position=position_dodge(width=0.95)) +
   theme_bw(base_size=16) +
-  theme(legend.position = "none", legend.key = element_rect(colour = 'black')) +
+  theme(legend.position = "none", legend.key = element_rect(colour = 'black'),axis.ticks.x=element_blank()) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
-  ylab(text.ylab) +
-  xlab(text.xlab) 
+  ylab("") +
+  xlab("")+
+  ggtitle("Primary")+
+  theme(plot.title = element_text(hjust = 0.5))
 
-title.grob <- textGrob(label = "B)",x = unit(0, "lines"), y = unit(0, "lines"),
+title.grob <- textGrob(label = "  ",x = unit(0, "lines"), y = unit(0, "lines"),
                        hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
 
 p2 <- arrangeGrob(p2, top = title.grob)
 grid.arrange(p2)
 
-w <- 36; h <- 8
-mylegend<-g_legend(leg)
-lay<-rbind(c(1), c(1), c(1), c(2),c(2),c(2),c(3))
-SingleStrategy_VP_1<-grid.arrange(p1,p2,mylegend,layout_matrix=lay)
-ggsave(sprintf("SingleStrategy_VP_1_Best50.pdf"), SingleStrategy_VP_1, width=w, height=h)
-
-#Smaller plot excluding mortality reduction and treatment duration
-
-#X labels
-xlabelsmain <-paste0(c("Former PWID Treatment",
-                       "Current PWID Treatment",
-                       "Decreased Relapse","Increased Cessation", 
-                       "Decreased Effective Contacts","Decreased Injection Initiation",
-                       "None"))
-
-text.ylab <- "Chronic HCV Prevalence"
-p1<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(2,4,5,6,7,8,11)), 
+#Secondary, Prevalence
+p3<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(3:5)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
            aes(x=order, y=ChronicPrev_End, by=IntLevelpct)) + 
   geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
   scale_fill_manual(values=model.colors, name='Intervention Level') +
-  scale_x_discrete(labels=c("","","","","","",""))+ 
-  scale_y_continuous(limits=c(0,4400),breaks=c(0,1000,2000,3000,4000),labels=c("0","1,000","2,000","3,000","4,000"))+
+  scale_x_discrete(labels=c("Decrease Current PWID Contacts","Increase Current PWID Cessation","Decrease Former PWID Relapse"))+ 
+  scale_y_continuous(limits=c(0,4400),breaks=c(0,1000,2000,3000,4000),labels=c("","","","",""))+
   stat_summary(aes(group=IntLevelpct), fun.y=median, geom="point", shape=23, size=2, fill= "white", position=position_dodge(width=0.95)) +
   theme_bw(base_size=16) +
   theme(legend.position = "none", legend.key = element_rect(colour = 'black'),axis.ticks.x=element_blank()) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
-  ylab(text.ylab) +
-  xlab("") 
+  ylab("") +
+  xlab("")+
+  ggtitle("Secondary")+
+  theme(plot.title = element_text(hjust = 0.5))
+p3
 
-title.grob <- textGrob(label = "A)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+p3 <- arrangeGrob(p3, top = title.grob)
+grid.arrange(p3)
 
-p1 <- arrangeGrob(p1, top = title.grob)
-grid.arrange(p1)
+#Tertiary, Prevalence
+text.ylab <- "Chronic HCV Prevalence"
+p4<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(6,8)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
+           aes(x=order, y=ChronicPrev_End, by=IntLevelpct)) + 
+  geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
+  scale_fill_manual(values=model.colors, name='Intervention Level') +
+  scale_x_discrete(labels=c("Treat Current PWID","Treat Former PWID"))+ 
+  scale_y_continuous(limits=c(0,4400),breaks=c(0,1000,2000,3000,4000),labels=c("","","","",""))+
+  stat_summary(aes(group=IntLevelpct), fun.y=median, geom="point", shape=23, size=2, fill= "white", position=position_dodge(width=0.95)) +
+  theme_bw(base_size=16) +
+  theme(legend.position = "none", legend.key = element_rect(colour = 'black'),axis.ticks.x=element_blank()) +
+  guides(fill = guide_legend(override.aes = list(colour = NA))) + 
+  ylab("") +
+  xlab("")+
+  ggtitle("Tertiary")+
+  theme(plot.title = element_text(hjust = 0.5))
 
+p4 <- arrangeGrob(p4, top = title.grob)
+grid.arrange(p4)
+
+#None, New Chronic
 text.ylab <- "New Chronic HCV Cases"
-p2<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(2,4,5,6,7,8,11)), 
+p5<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
            aes(x=order, y=NewChronic_End, by=IntLevelpct)) + 
   geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
   scale_fill_manual(values=model.colors, name='Intervention Level') +
@@ -2348,28 +2388,100 @@ p2<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(2,4,5,6,7
   theme(legend.position = "none", legend.key = element_rect(colour = 'black')) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
   ylab(text.ylab) +
-  xlab(text.xlab) 
+  xlab("") +
+  ggtitle("None")+
+  theme(plot.title = element_text(hjust = 0.5))
 
 title.grob <- textGrob(label = "B)",x = unit(0, "lines"), y = unit(0, "lines"),
                        hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
 
-p2 <- arrangeGrob(p2, top = title.grob)
-grid.arrange(p2)
+p5 <- arrangeGrob(p5, top = title.grob)
+grid.arrange(p5)
 
-w <- 20; h <- 8
-lay<-rbind(c(1), c(1), c(1), c(2),c(2),c(2),c(3))
-SingleStrategy_VP_main<-grid.arrange(p1,p2,mylegend,layout_matrix=lay)
+
+#Primary, New Chronic
+text.ylab <- "New Chronic HCV Cases"
+p6<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(2)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
+           aes(x=order, y=NewChronic_End, by=IntLevelpct)) + 
+  geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
+  scale_fill_manual(values=model.colors, name='Intervention Level') +
+  scale_x_discrete(labels="Decrease Injection Initiation")+ 
+  scale_y_continuous(limits=c(0,1150),breaks=c(0,300,600,900),labels=c("","","",""))+
+  stat_summary(aes(group=IntLevelpct), fun.y=median, geom="point", shape=23, size=2, fill= "white", position=position_dodge(width=0.95)) +
+  theme_bw(base_size=16) +
+  theme(legend.position = "none", legend.key = element_rect(colour = 'black')) +
+  guides(fill = guide_legend(override.aes = list(colour = NA))) + 
+  ylab("") +
+  xlab("") +
+  ggtitle("Primary")+
+  theme(plot.title = element_text(hjust = 0.5))
+p6
+
+title.grob <- textGrob(label = "  ",x = unit(0, "lines"), y = unit(0, "lines"),
+                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+
+p6 <- arrangeGrob(p6, top = title.grob)
+grid.arrange(p6)
+
+#Secondary, New Chronic
+text.ylab <- "New Chronic HCV Cases"
+p7<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(3:5)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
+           aes(x=order, y=NewChronic_End, by=IntLevelpct)) + 
+  geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
+  scale_fill_manual(values=model.colors, name='Intervention Level') +
+  scale_x_discrete(labels=c("Decrease Current PWID Contacts","Increase Current PWID Cessation","Decrease Former PWID Relapse"))+ 
+  scale_y_continuous(limits=c(0,1150),breaks=c(0,300,600,900),labels=c("","","",""))+
+  stat_summary(aes(group=IntLevelpct), fun.y=median, geom="point", shape=23, size=2, fill= "white", position=position_dodge(width=0.95)) +
+  theme_bw(base_size=16) +
+  theme(legend.position = "none", legend.key = element_rect(colour = 'black')) +
+  guides(fill = guide_legend(override.aes = list(colour = NA))) + 
+  ylab("") +
+  xlab("") +
+  ggtitle("Secondary")+
+  theme(plot.title = element_text(hjust = 0.5))
+p7
+
+p7 <- arrangeGrob(p7, top = title.grob)
+grid.arrange(p7)
+
+#Secondary, New Chronic
+text.ylab <- "New Chronic HCV Cases"
+p8<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(6,8)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
+           aes(x=order, y=NewChronic_End, by=IntLevelpct)) + 
+  geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
+  scale_fill_manual(values=model.colors, name='Intervention Level') +
+  scale_x_discrete(labels=c("Treat Current PWID","Treat Former PWID"))+ 
+  scale_y_continuous(limits=c(0,1150),breaks=c(0,300,600,900),labels=c("","","",""))+
+  stat_summary(aes(group=IntLevelpct), fun.y=median, geom="point", shape=23, size=2, fill= "white", position=position_dodge(width=0.95)) +
+  theme_bw(base_size=16) +
+  theme(legend.position = "none", legend.key = element_rect(colour = 'black')) +
+  guides(fill = guide_legend(override.aes = list(colour = NA))) + 
+  ylab("") +
+  xlab("") +
+  ggtitle("Tertiary")+
+  theme(plot.title = element_text(hjust = 0.5))
+p8
+
+p8 <- arrangeGrob(p8, top = title.grob)
+grid.arrange(p8)
+
+mylegend<-g_legend(leg)
+w <- 22; h <- 8
+lay<-rbind(c(1,1,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4), c(1,1,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4), 
+           c(1,1,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4),c(5,5,6,6,6,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8),
+           c(5,5,6,6,6,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8),c(5,5,6,6,6,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8),
+           c(9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9))
+SingleStrategy_VP_main<-grid.arrange(p1,p2,p3,p4,p5,p6,p7,p8,mylegend,layout_matrix=lay)
 ggsave(sprintf("SingleStrategy_VP_main_Best50.pdf"), SingleStrategy_VP_main, width=w, height=h)
 
 #Supplemental plot with mortality reduction, decreased treatment duration
 #X labels
-xlabelssupp <-paste0(c("Former PWID Treatment, 1 Year",
-                       "Current PWID Treatment, 1 Year",
-                       "Decreased Mortality, Current PWID","Decreased Mortality, Former PWID",
-                       "None"))
+xlabelssupp <-paste0(c("None","Treat Former PWID, 1 Year",
+                       "Treat Current PWID, 1 Year",
+                       "Decrease Current PWID Mortality","Decrease Former PWID Mortality"))
 
 text.ylab <- "Chronic HCV Prevalence"
-p1<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1,3,9,10,11)), 
+p1<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1,7,9,10,11)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
            aes(x=order, y=ChronicPrev_End, by=IntLevelpct)) + 
   geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
   scale_fill_manual(values=model.colors, name='Intervention Level') +
@@ -2389,7 +2501,7 @@ p1 <- arrangeGrob(p1, top = title.grob)
 grid.arrange(p1)
 
 text.ylab <- "New Chronic HCV Cases"
-p2<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1,3,9,10,11)), 
+p2<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1,3,9,10,11)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
            aes(x=order, y=NewChronic_End, by=IntLevelpct)) + 
   geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
   scale_fill_manual(values=model.colors, name='Intervention Level') +
@@ -2409,7 +2521,7 @@ p2 <- arrangeGrob(p2, top = title.grob)
 grid.arrange(p2)
 
 w <- 18; h <- 8
-lay<-rbind(c(1), c(1), c(1), c(2),c(2),c(2),c(3))
+lay<-rbind(c(1),c(1),c(1),c(2),c(2),c(2),c(3))
 SingleStrategy_VP_supp<-grid.arrange(p1,p2,mylegend,layout_matrix=lay)
 ggsave(sprintf("SingleStrategy_VP_supp_Best50.pdf"), SingleStrategy_VP_supp, width=w, height=h)
 
@@ -2417,88 +2529,88 @@ ggsave(sprintf("SingleStrategy_VP_supp_Best50.pdf"), SingleStrategy_VP_supp, wid
 #### Line Graphs of Best 50% Primary/Tertiary Sequential Interventions ####
 
 #legend plots: p1=points, p2=lines
-p1<-ggplot(data=subset(seqint2,h==1&inttype=="terttoprim"&pct!="None"))+
+p1<-ggplot(data=subset(seqint2,h==1&inttype=="terttoprim"&pct %in% c("10%","20%","40%")))+
   geom_point(aes(x=as.factor(intono-1),y=meanpctred_chr,colour=as.factor(pct)), size=2)+
   geom_point(aes(x=as.factor(intono-1),y=meanpctred_new,colour=as.factor(pct)), size=2)+
-  scale_x_discrete(breaks = 1:6, labels=c("Treatment: Former","+Treatment: Current","+Reduced Relapse",
-                                          "+Increased Cessation", "+Reduced Contacts",
-                                          "+Reduced Initiation"))+ 
+  scale_x_discrete(breaks = 1:6, labels=c("Treat Former PWID","+Treat Current PWID","+Decrease Former PWID Relapse",
+                                          "+Increase Current PWID Cessation", "+Decrease Current PWID Contacts",
+                                          "+Decrease Injection Initiation"))+ 
   scale_y_continuous(limits=c(-7,105),breaks=c(0,25,50,75,100),labels=c("0","25","50","75","100"))+
   ylab("")+
   xlab("Intervention Sequence")+
   ggtitle("Tertiary to Primary")+
-  scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#999999", "#666666", "#000000"), labels= c("10%","20%", "30%", "40%")) +
+  scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#666666", "#000000"), labels= c("10%","20%", "40%")) +
   # scale_linetype_manual(name="Type",values=c("dotdash","solid"),labels=c("Prevalence "," New Chronic Cases"))+
   theme_bw(base_size=16)+
   theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
   theme(legend.position="bottom", legend.background = element_rect(colour = 'NA', fill = 'NA', size = 2, linetype="blank"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   theme(legend.key = element_blank())+
   theme(plot.title = element_text(hjust = 0.5))
 
-p2<-ggplot(data=subset(seqint2,h==1&inttype=="terttoprim"&pct!="None"))+
+p2<-ggplot(data=subset(seqint2,h==1&inttype=="terttoprim"&pct %in% c("10%","20%","40%")))+
   #geom_point(aes(x=as.factor(intono-1),y=meanpctred_chr,colour=as.factor(pct)), size=2)+
   #geom_point(aes(x=as.factor(intono-1),y=meanpctred_new,colour=as.factor(pct)), size=2)+
   geom_line(aes(x=intono-1,y=meanpctred_chr, linetype="dotdash"), size=1)+
   geom_line(aes(x=intono-1,y=meanpctred_new, linetype="solid"), size=1)+
-  scale_x_discrete(breaks = 1:6, labels=c("Treatment: Former","+Treatment: Current","+Reduced Relapse",
-                                          "+Increased Cessation", "+Reduced Contacts",
-                                          "+Reduced Initiation"))+ 
+  scale_x_discrete(breaks = 1:6, labels=c("Treat Former PWID","+Treat Current PWID","+Decrease Former PWID Relapse",
+                                          "+Increase Current PWID Cessation", "+Decrease Current PWID Contacts",
+                                          "+Decrease Injection Initiation"))+ 
   scale_y_continuous(limits=c(-7,105),breaks=c(0,25,50,75,100),labels=c("0","25","50","75","100"))+
   ylab("")+
   xlab("Intervention Sequence")+
   ggtitle("Tertiary to Primary")+
-  #scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#999999", "#666666", "#000000"), labels= c("10%","20%", "30%", "40%")) +
+  #scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#666666", "#000000"), labels= c("10%","20%", "40%")) +
   scale_linetype_manual(name="Type",values=c("dotdash","solid"),labels=c("Prevalence "," New Chronic Cases"))+
   theme_bw(base_size=16)+
   theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
   theme(legend.position="bottom", legend.background = element_rect(colour = 'NA', fill = 'NA', size = 2, linetype="blank"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   theme(legend.key = element_blank())+
   theme(plot.title = element_text(hjust = 0.5))
 
-p3<-ggplot(data=subset(seqint2,h==1&inttype=="terttoprim"&pct!="None"))+
+p3<-ggplot(data=subset(seqint2,h==1&inttype=="terttoprim"&pct %in% c("10%","20%","40%")))+
   geom_point(aes(x=as.factor(intono-1),y=meanpctred_chr,colour=as.factor(pct)), size=2)+
   geom_point(aes(x=as.factor(intono-1),y=meanpctred_new,colour=as.factor(pct)), size=2)+
   geom_line(aes(x=intono-1,y=meanpctred_chr,colour=as.factor(pct), linetype="dotdash"), size=1)+
   geom_line(aes(x=intono-1,y=meanpctred_new,colour=as.factor(pct), linetype="solid"), size=1)+
-  scale_x_discrete(breaks = 1:6, labels=c("Treatment: Former","+Treatment: Current","+Reduced Relapse",
-                                          "+Increased Cessation", "+Reduced Contacts",
-                                          "+Reduced Initiation"))+ 
+  scale_x_discrete(breaks = 1:6, labels=c("Treat Former PWID","+Treat Current PWID","+Decrease Former PWID Relapse",
+                                          "+Increase Current PWID Cessation", "+Decrease Current PWID Contacts",
+                                          "+Decrease Injection Initiation"))+ 
   scale_y_continuous(limits=c(-10,105),breaks=c(0,25,50,75,100),labels=c("0","25","50","75","100"))+
   ylab("")+
   xlab("Intervention Sequence")+
   ggtitle("Tertiary to Primary")+
-  scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#999999", "#666666", "#000000"), labels= c("10%","20%", "30%", "40%")) +
+  scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#666666", "#000000"), labels= c("10%","20%", "40%")) +
   scale_linetype_manual(name="Type",values=c("dotdash","solid"),labels=c("Prevalence "," New Chronic Cases"))+
   theme_bw(base_size=16)+
   theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
   theme(legend.position="none", legend.background = element_rect(colour = 'NA', fill = 'NA', size = 2, linetype="blank"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   theme(legend.key = element_blank())+
   theme(plot.title = element_text(hjust = 0.5))
 
-p4<-ggplot(data=subset(seqint2,h==1&inttype=="primtotert"&pct!="None"))+
+p4<-ggplot(data=subset(seqint2,h==1&inttype=="primtotert"&pct %in% c("10%","20%","40%")))+
   geom_point(aes(x=as.factor(intono-1),y=meanpctred_chr,colour=as.factor(pct)), size=2)+
   geom_point(aes(x=as.factor(intono-1),y=meanpctred_new,colour=as.factor(pct)), size=2)+
   geom_line(aes(x=intono-1,y=meanpctred_chr,colour=as.factor(pct), linetype="dotdash"), size=1)+
   geom_line(aes(x=intono-1,y=meanpctred_new,colour=as.factor(pct), linetype="solid"), size=1)+
-  scale_x_discrete(breaks = 1:6, labels=c("Reduced Initiation","+Reduced Contacts","+Increased Cessation",
-                                          "+Reduced Relapse","+Treatment: Current","Treatment: Former"))+ 
+  scale_x_discrete(breaks = 1:6, labels=c("Decrease Injection Initiation","+Decrease Current PWID Contacts","+Increase Current PWID Cessation",
+                                          "+Decrease Former PWID Relapse","+Treat Current PWID","+Treat Former PWID"))+ 
   scale_y_continuous(limits=c(-10,105),breaks=c(0,25,50,75,100),labels=c("0","25","50","75","100"))+
   ylab("Mean % Case Reduction")+
   xlab("Intervention Sequence")+
   ggtitle("Primary to Tertiary")+
-  scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#999999", "#666666", "#000000"), labels= c("10%","20%", "30%", "40%")) +
+  scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#666666", "#000000"), labels= c("10%","20%", "40%")) +
   scale_linetype_manual(name="Type",values=c("dotdash","solid"),labels=c("Prevalence "," New Chronic Cases"))+
   theme_bw(base_size=16)+
   theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
   theme(legend.position="none", legend.background = element_rect(colour = 'NA', fill = 'NA', size = 2, linetype="blank"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   theme(legend.key = element_blank())+
   theme(plot.title = element_text(hjust = 0.5))
 
-w <- 8; h <- 6
+w <- 10; h <- 8
 legendpoint<-g_legend(p1)
 legendline<-g_legend(p2)
 lay<-rbind(c(1,2),c(1,2),c(1,2),c(1,2),c(1,2),c(1,2),c(1,2),c(1,2),c(3,3),c(4,4))
@@ -2510,71 +2622,75 @@ ggsave(sprintf("Multi_Sequential_h=k=1_Best50.pdf"), Multi_Sequential, width=w, 
 summary(subset(seqint,seqint$best50==1)$pctred_chr)
 summary(subset(seqint,seqint$best50==1)$pctred_new)
 
+#subset data to exclude 30% lines, select h==1, and best 50% results
+int<-subset(seqint,h==1&pct %in% c("10%","20%","40%")&best50==1)
+
 #Intervention % legend
-p1<-ggplot(data=subset(seqint,h==1&inttype=="terttoprim"&pct!="None"&best50==1))+
+p1<-ggplot(data=subset(int,inttype=="terttoprim"))+
   geom_point(aes(x=as.factor(intono-1), y=pctred_chr,
                  colour=as.factor(pct)),
-             position=position_dodge(width=c(0.4,0.4)))+
-  scale_x_discrete(breaks = 1:6, labels=c("Treatment: Former","+Treatment: Current","+Reduced Relapse",
-                                          "+Increased Cessation", "+Reduced Contacts",
-                                          "+Reduced Initiation"))+ 
+             position=position_dodge(width=c(0.4,0.4,0.4)))+
+  scale_x_discrete(breaks = 1:6, labels=c("Treat Former PWID","+Treat Current PWID","+Decrease Former PWID Relapse",
+                                          "+Increase Current PWID Cessation", "+Decrease Current PWID Contacts",
+                                          "+Decrease Injection Initiation"))+ 
   scale_y_continuous(limits=c(-70,100),breaks=c(-50,-25,0,25,50,75,100),
                      labels=c("-50","-25","0","25","50","75","100"))+
-  ylab("")+
+  ylab("% Reduction: Prevalence")+
   xlab("Intervention Sequence")+
-  scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#999999", "#666666", "#000000"), labels= c("10%","20%", "30%", "40%")) +
-  theme_bw(base_size=16)+
+  scale_colour_manual(name="Intervention %", values = c("#CCCCCC", "#666666", "#000000"), labels= c("10%","20%", "40%")) +
+  theme_bw(base_size=14)+
   theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
   theme(legend.position="bottom", legend.background = element_rect(colour = 'NA', fill = 'NA', size = 2, linetype="blank"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   theme(legend.key = element_blank())
+p1
 
-p3<-ggplot(data=subset(seqint,h==1&inttype=="terttoprim"&pct!="None"&best50==1))+
+p3<-ggplot(data=subset(int,inttype=="terttoprim"))+
   geom_point(aes(x=as.factor(intono-1), y=pctred_chr,
                  colour=as.factor(pct)),
-             position=position_dodge(width=c(0.4,0.4)))+
-  scale_x_discrete(breaks = 1:6, labels=c("Treatment: Former","+Treatment: Current","+Reduced Relapse",
-                                          "+Increased Cessation", "+Reduced Contacts",
-                                          "+Reduced Initiation"))+ 
+             position=position_dodge(width=c(0.4,0.4,0.4)))+
+  scale_x_discrete(breaks = 1:6, labels=c("Treat Former PWID","+Treat Current PWID","+Decrease Former PWID Relapse",
+                                          "+Increase Current PWID Cessation", "+Decrease Current PWID Contacts",
+                                          "+Decrease Injection Initiation"))+ 
   stat_summary(aes(x=as.factor(intono-1),y=pctred_chr,group=as.factor(pct)),
-               position=position_dodge(width=c(0.4,0.4)),fun.y = median, geom="point",
+               position=position_dodge(width=c(0.4,0.4,0.4)),fun.y = median, geom="point",
                shape=23, size=2, fill="white")+
   scale_y_continuous(limits=c(-70,100),breaks=c(-50,-25,0,25,50,75,100),
                      labels=c("-50","-25","0","25","50","75","100"))+
-  ylab("")+
+  ylab("% Reduction: Prevalence")+
   xlab("Intervention Sequence")+
-  scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#999999", "#666666", "#000000"), labels= c("10%","20%", "30%", "40%")) +
-  theme_bw(base_size=16)+
+  scale_colour_manual(name="Intervention %", values = c("#CCCCCC", "#666666", "#000000"), labels= c("10%","20%", "40%")) +
+  theme_bw(base_size=14)+
   theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
   theme(legend.position="none", legend.background = element_rect(colour = 'NA', fill = 'NA', size = 2, linetype="blank"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   theme(legend.key = element_blank())
-
+p3
 title.grob <- textGrob(label = "D)",x = unit(0, "lines"), y = unit(0, "lines"),
                        hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
 
 p3 <- arrangeGrob(p3, top = title.grob)
 grid.arrange(p3)
 
-p4<-ggplot(data=subset(seqint,h==1&inttype=="terttoprim"&pct!="None"&best50==1))+
+p4<-ggplot(data=subset(int,inttype=="terttoprim"))+
   geom_point(aes(x=as.factor(intono-1), y=pctred_new, 
                  colour=as.factor(pct)),
-             position=position_dodge(width=c(0.4,0.4)))+
-  scale_x_discrete(breaks = 1:6, labels=c("","","",
-                                          "", "",
-                                          ""))+ 
+             position=position_dodge(width=c(0.4,0.4,0.4)))+
+  scale_x_discrete(breaks = 1:6, labels=c("Treat Former PWID","+Treat Current PWID","+Decrease Former PWID Relapse",
+                                          "+Increase Current PWID Cessation", "+Decrease Current PWID Contacts",
+                                          "+Decrease Injection Initiation"))+ 
   stat_summary(aes(x=as.factor(intono-1),y=pctred_new,group=as.factor(pct)),
-               position=position_dodge(width=c(0.4,0.4)),fun.y = median, geom="point",
+               position=position_dodge(width=c(0.4,0.4,0.4)),fun.y = median, geom="point",
                shape=23, size=2, fill="white")+
   scale_y_continuous(limits=c(-70,100),breaks=c(-50,-25,0,25,50,75,100),
                      labels=c("-50","-25","0","25","50","75","100"))+
-  ylab("")+
+  ylab("% Reduction: New Chronic")+
   xlab("")+
-  scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#999999", "#666666", "#000000"), labels= c("10%","20%", "30%", "40%")) +
-  theme_bw(base_size=16)+
+  scale_colour_manual(name="Intervention %", values = c("#CCCCCC", "#666666", "#000000"), labels= c("10%","20%", "40%")) +
+  theme_bw(base_size=14)+
   theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
   theme(legend.position="none", legend.background = element_rect(colour = 'NA', fill = 'NA', size = 2, linetype="blank"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   theme(legend.key = element_blank())
 
 title.grob <- textGrob(label = "B)",x = unit(0, "lines"), y = unit(0, "lines"),
@@ -2583,52 +2699,50 @@ title.grob <- textGrob(label = "B)",x = unit(0, "lines"), y = unit(0, "lines"),
 p4 <- arrangeGrob(p4, top = title.grob)
 grid.arrange(p4)
 
-p5<-ggplot(data=subset(seqint,h==1&inttype=="primtotert"&pct!="None"&best50==1))+
+p5<-ggplot(data=subset(int,inttype=="primtotert"))+
   geom_point(aes(x=as.factor(intono-1), y=pctred_chr,
                  colour=as.factor(pct)),
-             position=position_dodge(width=c(0.4,0.4)))+
-  scale_x_discrete(breaks = 1:6, labels=c("+Reduced Initiation","+Reduced Contacts",
-                                          "+Increased Cessation","+Reduced Relapse",
-                                          "+Treatment: Current","Treatment: Former"))+ 
+             position=position_dodge(width=c(0.4,0.4,0.4)))+
+  scale_x_discrete(breaks = 1:6, labels=c("Decrease Injection Initiation","+Decrease Current PWID Contacts","+Increase Current PWID Cessation",
+                                          "+Decrease Former PWID Relapse","+Treat Current PWID","Treat Former PWID"))+ 
   stat_summary(aes(x=as.factor(intono-1),y=pctred_chr,group=as.factor(pct)),
-               position=position_dodge(width=c(0.4,0.4)),fun.y = median, geom="point",
+               position=position_dodge(width=c(0.4,0.4,0.4)),fun.y = median, geom="point",
                shape=23, size=2, fill="white")+
   scale_y_continuous(limits=c(-70,100),breaks=c(-50,-25,0,25,50,75,100),
                      labels=c("-50","-25","0","25","50","75","100"))+
   ylab("% Reduction: Prevalence")+
   xlab("Intervention Sequence")+
-  scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#999999", "#666666", "#000000"), labels= c("10%","20%", "30%", "40%")) +
-  theme_bw(base_size=16)+
+  scale_colour_manual(name="Intervention %", values = c("#CCCCCC", "#666666", "#000000"), labels= c("10%","20%", "40%")) +
+  theme_bw(base_size=14)+
   theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
   theme(legend.position="none", legend.background = element_rect(colour = 'NA', fill = 'NA', size = 2, linetype="blank"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   theme(legend.key = element_blank())
-
+p5
 title.grob <- textGrob(label = "C)",x = unit(0, "lines"), y = unit(0, "lines"),
                        hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
 
 p5 <- arrangeGrob(p5, top = title.grob)
 grid.arrange(p5)
 
-p6<-ggplot(data=subset(seqint,h==1&inttype=="primtotert"&pct!="None"&best50==1))+
+p6<-ggplot(data=subset(int,inttype=="primtotert"))+
   geom_point(aes(x=as.factor(intono-1), y=pctred_new, 
                  colour=as.factor(pct)),
-             position=position_dodge(width=c(0.4,0.4)))+
-  scale_x_discrete(breaks = 1:6, labels=c("","","",
-                                          "", "",
-                                          ""))+ 
+             position=position_dodge(width=c(0.4,0.4,0.4)))+
+  scale_x_discrete(breaks = 1:6, labels=c("Decrease Injection Initiation","+Decrease Current PWID Contacts","+Increase Current PWID Cessation",
+                                          "+Decrease Former PWID Relapse","+Treat Current PWID","Treat Former PWID"))+ 
   stat_summary(aes(x=as.factor(intono-1),y=pctred_new,group=as.factor(pct)),
-               position=position_dodge(width=c(0.4,0.4)),fun.y = median, geom="point",
+               position=position_dodge(width=c(0.4,0.4,0.4)),fun.y = median, geom="point",
                shape=23, size=2, fill="white")+
   scale_y_continuous(limits=c(-70,100),breaks=c(-50,-25,0,25,50,75,100),
                      labels=c("-50","-25","0","25","50","75","100"))+
-  ylab("% Reduction: New Chronic Cases")+
+  ylab("% Reduction: New Chronic")+
   xlab("")+
-  scale_colour_manual(name="Intervention %", values = c("#CCCCCC","#999999", "#666666", "#000000"), labels= c("10%","20%", "30%", "40%")) +
-  theme_bw(base_size=16)+
+  scale_colour_manual(name="Intervention %", values = c("#CCCCCC", "#666666", "#000000"), labels= c("10%","20%", "40%")) +
+  theme_bw(base_size=14)+
   theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
   theme(legend.position="none", legend.background = element_rect(colour = 'NA', fill = 'NA', size = 2, linetype="blank"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   theme(legend.key = element_blank())
 
 title.grob <- textGrob(label = "A)",x = unit(0, "lines"), y = unit(0, "lines"),
