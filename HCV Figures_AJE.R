@@ -2294,7 +2294,7 @@ text.ylab <- "Chronic HCV Prevalence"
 p1<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
            aes(x=order, y=ChronicPrev_End, by=IntLevelpct)) + 
   geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
-  scale_fill_manual(values=model.colors, name='Intervention Level') +
+  scale_fill_manual(values="#FFFFFF", name='Intervention Level') +
   scale_x_discrete(labels="None")+ 
   scale_y_continuous(limits=c(0,4400),breaks=c(0,1000,2000,3000,4000),labels=c("0","1,000","2,000","3,000","4,000"))+
   stat_summary(aes(group=IntLevelpct), fun.y=median, geom="point", shape=23, size=2, fill= "white", position=position_dodge(width=0.95)) +
@@ -2380,7 +2380,7 @@ text.ylab <- "New Chronic HCV Cases"
 p5<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1)&singleint$IntLevelpct %in% c("10%","20%","40%","None")), 
            aes(x=order, y=NewChronic_End, by=IntLevelpct)) + 
   geom_violin(aes(fill=IntLevelpct), position=position_dodge(width=0.95), trim=TRUE) +
-  scale_fill_manual(values=model.colors, name='Intervention Level') +
+  scale_fill_manual(values="#FFFFFF", name='Intervention Level') +
   scale_x_discrete(labels=xlabelsmain)+ 
   scale_y_continuous(limits=c(0,1150),breaks=c(0,300,600,900),labels=c("0","300","600","900"))+
   stat_summary(aes(group=IntLevelpct), fun.y=median, geom="point", shape=23, size=2, fill= "white", position=position_dodge(width=0.95)) +
@@ -2704,7 +2704,7 @@ p5<-ggplot(data=subset(int,inttype=="primtotert"))+
                  colour=as.factor(pct)),
              position=position_dodge(width=c(0.4,0.4,0.4)))+
   scale_x_discrete(breaks = 1:6, labels=c("Decrease Injection Initiation","+Decrease Current PWID Contacts","+Increase Current PWID Cessation",
-                                          "+Decrease Former PWID Relapse","+Treat Current PWID","Treat Former PWID"))+ 
+                                          "+Decrease Former PWID Relapse","+Treat Current PWID","+Treat Former PWID"))+ 
   stat_summary(aes(x=as.factor(intono-1),y=pctred_chr,group=as.factor(pct)),
                position=position_dodge(width=c(0.4,0.4,0.4)),fun.y = median, geom="point",
                shape=23, size=2, fill="white")+
@@ -2730,7 +2730,7 @@ p6<-ggplot(data=subset(int,inttype=="primtotert"))+
                  colour=as.factor(pct)),
              position=position_dodge(width=c(0.4,0.4,0.4)))+
   scale_x_discrete(breaks = 1:6, labels=c("Decrease Injection Initiation","+Decrease Current PWID Contacts","+Increase Current PWID Cessation",
-                                          "+Decrease Former PWID Relapse","+Treat Current PWID","Treat Former PWID"))+ 
+                                          "+Decrease Former PWID Relapse","+Treat Current PWID","+Treat Former PWID"))+ 
   stat_summary(aes(x=as.factor(intono-1),y=pctred_new,group=as.factor(pct)),
                position=position_dodge(width=c(0.4,0.4,0.4)),fun.y = median, geom="point",
                shape=23, size=2, fill="white")+
