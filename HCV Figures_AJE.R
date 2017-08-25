@@ -1,11 +1,14 @@
-## Figure Script: Gicquelais et al. (2017). Hepatitis C transmission model.
+## Figure Script: Gicquelais et al. (2017). Insights into Hepatitis C Transmission in Young Persons
+## who Inject Drugs: Results from a Dynamic Modeling Approach Informed by State-Level Public 
+## Health Surveillance Data.
 
 ## Before running this code, run the model simulations in the code HCV_MS_04202017.m to simulate
-## the hepatitis C model and output results as csv or txt files. Use this script creates figures 
+## the hepatitis C model and output results as csv or txt files. This script creates figures 
 ## summarizing results and similar to those published in the article. 
 
 ################ Section 1: Packages and Functions to Load First ################### 
 library(ggplot2)
+library(ggjoy)
 library(grid)
 library(gridExtra)
 library(car)
@@ -516,6 +519,14 @@ summary(seqint2$maxpctred_new)
 
 
 
+
+#### Save and/or Load R Workspace ####
+
+#save(file="/Users/RGicquelais/Desktop/HCV/MDCH Young HCV Modeling/Figures and Datasets/Final 4.20.2017/Dataset Workspace_4.20.17.RData")
+
+load("/Users/RGicquelais/Desktop/HCV/MDCH Young HCV Modeling/Figures and Datasets/Final 4.20.2017/Dataset Workspace_4.20.17.RData")
+
+
 ############### Section 4: Latin Hypercube Sampling Results ################
 #### Plot of New Chronic Cases Fit to MDHHS Data (50% Best, 1 Color) #####
 #Plotting Parameters
@@ -738,6 +749,7 @@ w <- 10; h <- 6
 lay<-rbind(c(1,1,1,1,1,2),c(1,1,1,1,1,3),c(4,4,5,5,6,6),c(4,4,5,5,6,6))
 LHS_NewChronic<-grid.arrange(p1,legend1,Datalegend,p2,p3,p4,layout_matrix=lay)
 ggsave(sprintf("LHS_NewChronic_RSSColor.pdf"), LHS_NewChronic, width=w, height=h)
+ggsave(sprintf("LHS_NewChronic_RSSColor.png"), LHS_NewChronic, width=w, height=h)
 
 #### Plot of New Chronic Cases Fit to MDHHS Data (All, Color by Phi_i) #####
 summary(params$phi1)
@@ -2249,6 +2261,7 @@ summary(best25[,2:36])
 
 
 
+
 ################ Section 5 Figures: Intervention Simulation Results ################
 #### Violin Plots of Best 50% Fits of Single Interventions ####
 #Set plot labels and colors
@@ -2756,6 +2769,172 @@ legendpoint<-g_legend(p1)
 lay<-rbind(c(1,2),c(1,2),c(1,2),c(1,2),c(1,2),c(1,2),c(3,4),c(3,4),c(3,4),c(3,4),c(3,4),c(3,4),c(5,5))
 Multi_Sequential_ranges<-grid.arrange(p6,p4,p5,p3,legendpoint,layout_matrix=lay)
 ggsave(sprintf("Multi_Sequential_h=k=1_ranges_Best50.pdf"), Multi_Sequential_ranges, width=w, height=h)
+
+#### Joy Plots of Best Fitting 50% of Primary/Tertiary Sequential Interventions ####
+summary(subset(seqint,seqint$best50==1)$pctred_chr)
+summary(subset(seqint,seqint$best50==1)$pctred_new)
+
+#subset data to exclude 30% lines, select h==1, and best 50% results
+int<-subset(seqint,h==1&pct %in% c("10%","20%","40%")&best50==1)
+
+#calculate median % reduction for each intervention combination
+median<-cbind(melt(tapply(int$pctred_chr,list(int$intono,int$pct,int$inttype),median),id="pct"),
+              melt(tapply(int$pctred_new,list(int$intono,int$pct,int$inttype),median),id="pct"))
+median<-median[,c(1,2,3,4,8)]
+colnames(median) <- c("intono",	"pct",	"inttype",	"med_pctredchr", "med_pctrednew")
+
+medianprim<-subset(median,inttype=="primtotert")
+mediantert<-subset(median,inttype=="terttoprim")
+
+#Intervention % legend
+p1<-ggplot(data=subset(int,inttype=="terttoprim"),aes(y=as.factor(intono-1), x=pctred_chr))+
+  geom_joy(scale=1,aes(fill=pct))+
+  theme_joy()+
+  geom_point(data=subset(median,inttype=="terttoprim"),
+             x=subset(median,inttype=="terttoprim")$med_pctredchr,
+             y=subset(median,inttype=="terttoprim")$intono-0.92,
+             by=subset(median,inttype=="terttoprim")$pct,
+             size=1.5,shape=23,fill="white")+
+  xlab("% Reduction: Prevalence")+
+  ylab("Intervention Sequence")+
+  theme_bw(base_size=14)+
+  theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
+  theme(legend.position="bottom", legend.background = element_rect(colour = 'NA', 
+                                                                   fill = 'NA', size = 2, linetype="blank"))+
+  theme(legend.key = element_blank())+
+  scale_fill_cyclical(guide="legend",values = c("#CCCCCC", "#666666", "#000000"),
+                      labels=c("10%","20%","40%"),name="Intervention %")+
+  scale_y_discrete(breaks = 1:6, labels=c("Treat Former PWID","+Treat Current PWID","+Decrease Relapse  ",
+                                          "+Increase Cessation ", "+Decrease Contacts ",
+                                          "+Decrease Initiation  "))+ 
+  scale_x_continuous(limits=c(-70,100),breaks=c(-50,0,50,100),
+                     labels=c("-50","0","50","100"))
+
+p1
+
+p3<-ggplot(data=subset(int,inttype=="terttoprim"),aes(y=as.factor(intono-1), x=pctred_chr))+
+  geom_joy(scale=1,aes(fill=pct))+
+  theme_joy()+
+  geom_point(data=subset(median,inttype=="terttoprim"),
+             x=subset(median,inttype=="terttoprim")$med_pctredchr,
+             y=subset(median,inttype=="terttoprim")$intono-0.92,
+             by=subset(median,inttype=="terttoprim")$pct,
+             size=1.5,shape=23,fill="white")+
+  xlab("% Reduction: Prevalence")+
+  ylab("Intervention Sequence")+
+  theme_bw(base_size=14)+
+  theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
+  theme(legend.position="none", legend.background = element_rect(colour = 'NA', 
+                                                                 fill = 'NA', size = 2, linetype="blank"))+
+  theme(legend.key = element_blank())+
+  scale_fill_cyclical(guide="legend",values = c("#CCCCCC", "#666666", "#000000"),
+                      labels=c("10%","20%","40%"),name="Intervention %")+
+  scale_y_discrete(breaks = 1:6, labels=c("Treat Former PWID","+Treat Current PWID","+Decrease Relapse  ",
+                                          "+Increase Cessation ", "+Decrease Contacts ",
+                                          "+Decrease Initiation  "))+ 
+  scale_x_continuous(limits=c(-70,100),breaks=c(-50,0,50,100),
+                     labels=c("-50","0","50","100"))
+
+p3
+title.grob <- textGrob(label = "D)",x = unit(0, "lines"), y = unit(0, "lines"),
+                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+
+p3 <- arrangeGrob(p3, top = title.grob)
+grid.arrange(p3)
+
+p4<-ggplot(data=subset(int,inttype=="terttoprim"),aes(y=as.factor(intono-1), x=pctred_new))+
+  geom_joy(scale=1,aes(fill=pct))+
+  theme_joy()+
+  geom_point(data=subset(median,inttype=="terttoprim"),
+             x=subset(median,inttype=="terttoprim")$med_pctrednew,
+             y=subset(median,inttype=="terttoprim")$intono-0.92,
+             by=subset(median,inttype=="terttoprim")$pct,
+             size=1.5,shape=23,fill="white")+
+  ylab("Intervention Sequence")+
+  xlab("% Reduction: New Chronic")+
+  theme_bw(base_size=14)+
+  theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
+  theme(legend.position="none", legend.background = element_rect(colour = 'NA', 
+                                                                 fill = 'NA', size = 2, linetype="blank"))+
+  theme(legend.key = element_blank())+
+  scale_fill_cyclical(guide="legend",values = c("#CCCCCC", "#666666", "#000000"),
+                      labels=c("10%","20%","40%"),name="Intervention %")+
+  scale_y_discrete(breaks = 1:6, labels=c("Treat Former PWID","+Treat Current PWID","+Decrease Relapse  ",
+                                          "+Increase Cessation ", "+Decrease Contacts ",
+                                          "+Decrease Initiation  "))+ 
+  scale_x_continuous(limits=c(-70,100),breaks=c(-50,0,50,100),
+                     labels=c("-50","0","50","100"))
+
+title.grob <- textGrob(label = "B)",x = unit(0, "lines"), y = unit(0, "lines"),
+                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+
+p4 <- arrangeGrob(p4, top = title.grob)
+grid.arrange(p4)
+
+p5<-ggplot(data=subset(int,inttype=="primtotert"),aes(y=as.factor(intono-1), x=pctred_chr))+
+  geom_joy(scale=1,aes(fill=pct))+
+  theme_joy()+
+  geom_point(data=subset(median,inttype=="primtotert"),
+             x=subset(median,inttype=="primtotert")$med_pctredchr,
+             y=subset(median,inttype=="primtotert")$intono-0.92,
+             by=subset(median,inttype=="primtotert")$pct,
+             size=1.5,shape=23,fill="white")+
+  xlab("% Reduction: Prevalence")+
+  ylab("Intervention Sequence")+
+  theme_bw(base_size=14)+
+  theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
+  theme(legend.position="none", legend.background = element_rect(colour = 'NA', 
+                                                                 fill = 'NA', size = 2, linetype="blank"))+
+  theme(legend.key = element_blank())+
+  scale_fill_cyclical(guide="legend",values = c("#CCCCCC", "#666666", "#000000"),
+                      labels=c("10%","20%","40%"),name="Intervention %")+
+  scale_y_discrete(breaks = 1:6, labels=c("Decrease Initiation  ","+Decrease Contacts ",
+                                          "+Increase Cessation ", "+Decrease Relapse  ",
+                                          "+Treat Current PWID","+Treat Former PWID"))+ 
+  scale_x_continuous(limits=c(-70,100),breaks=c(-50,0,50,100),
+                     labels=c("-50","0","50","100"))
+
+p5
+title.grob <- textGrob(label = "C)",x = unit(0, "lines"), y = unit(0, "lines"),
+                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+
+p5 <- arrangeGrob(p5, top = title.grob)
+grid.arrange(p5)
+
+p6<-ggplot(data=subset(int,inttype=="primtotert"),aes(y=as.factor(intono-1), x=pctred_new))+
+  geom_joy(scale=1,aes(fill=pct))+
+  theme_joy()+
+  geom_point(data=subset(median,inttype=="primtotert"),
+             x=subset(median,inttype=="primtotert")$med_pctrednew,
+             y=subset(median,inttype=="primtotert")$intono-0.92,
+             by=subset(median,inttype=="primtotert")$pct,
+             size=1.5,shape=23,fill="white")+
+  xlab("% Reduction: New Chronic")+
+  ylab("Intervention Sequence")+
+  theme_bw(base_size=14)+
+  theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
+  theme(legend.position="none", legend.background = element_rect(colour = 'NA', 
+                                                                 fill = 'NA', size = 2, linetype="blank"))+
+  theme(legend.key = element_blank())+
+  scale_fill_cyclical(guide="legend",values = c("#CCCCCC", "#666666", "#000000"),
+                      labels=c("10%","20%","40%"),name="Intervention %")+
+  scale_y_discrete(breaks = 1:6, labels=c("Decrease Initiation  ","+Decrease Contacts ",
+                                          "+Increase Cessation ", "+Decrease Relapse  ",
+                                          "+Treat Current PWID","+Treat Former PWID"))+ 
+  scale_x_continuous(limits=c(-70,100),breaks=c(-50,0,50,100),
+                     labels=c("-50","0","50","100"))
+
+title.grob <- textGrob(label = "A)",x = unit(0, "lines"), y = unit(0, "lines"),
+                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+
+p6 <- arrangeGrob(p6, top = title.grob)
+grid.arrange(p6)
+
+w <- 10; h <- 6.5
+legendpoint<-g_legend(p1)
+lay<-rbind(c(1,2),c(1,2),c(1,2),c(1,2),c(1,2),c(1,2),c(3,4),c(3,4),c(3,4),c(3,4),c(3,4),c(3,4),c(5,5))
+Multi_Sequential_ranges<-grid.arrange(p6,p4,p5,p3,legendpoint,layout_matrix=lay)
+ggsave(sprintf("Multi_Sequential_h=k=1_joyplot_Best50.pdf"), Multi_Sequential_ranges, width=w, height=h)
 
 #### Describe sequential results w/high impact of tert to primary on new chronic####
 examine<-subset(seqint,h==1&inttype=="terttoprim"&pct!="None"&pctred_new>=10&e==c(120,121,122,123))
