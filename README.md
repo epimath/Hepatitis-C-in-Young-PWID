@@ -2,7 +2,7 @@
 
 Code for hepatitis C in young persons who inject drugs (PWID). This is the source code for an in progress article:
 
-Insights into Hepatitis C Transmission in Young Persons who Inject Drugs: A Dynamic Modeling Approach Informed by State-Level Public Health Surveillance Data. Rachel E. Gicquelais, Betsy Foxman, Joseph R. Coyle, and Marisa C. Eisenberg. In prep. 
+Insights into Hepatitis C Transmission in Young Persons who Inject Drugs: A Dynamic Modeling Approach Informed by State-Level Public Health Surveillance Data. Rachel E. Gicquelais, Betsy Foxman, Joseph R. Coyle, and Marisa C. Eisenberg. Submitted. 
 
 Questions? Contact Marisa Eisenberg (marisae@umich.edu) and Rachel Gicquelais (rgic@umich.edu).
 
