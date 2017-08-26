@@ -1,6 +1,6 @@
-## Figure Script: Gicquelais et al. (2017). Insights into Hepatitis C Transmission in Young Persons
-## who Inject Drugs: Results from a Dynamic Modeling Approach Informed by State-Level Public 
-## Health Surveillance Data.
+## Figure Script: Gicquelais, Foxman, Coyle, and Eisenberg. (2017). Insights into Hepatitis C 
+## Transmission in Young Persons who Inject Drugs: Results from a Dynamic Modeling Approach
+## Informed by State-Level Public Health Surveillance Data. Submitted. 
 
 ## Before running this code, run the model simulations in the code HCV_MS_04202017.m to simulate
 ## the hepatitis C model and output results as csv or txt files. This script creates figures 
@@ -681,10 +681,11 @@ p1<-ggplot(LHS.melted, aes(x=Year, y=value, by=variable, color=RSS)) +
   scale_colour_gradientn(name="RSS",colours=rainbow(5))+
   guides(color=guide_legend(override.aes=list(shape=c(NA,16),linetype=c(1,0))))+
   ylab(text.ylab) +
-  xlab(text.xlab) 
+  xlab(text.xlab) +
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 title.grob <- textGrob(label = "A)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = 0,gp = gpar(fontsize = 16))
 
 p1 <- arrangeGrob(p1, top = title.grob)
 grid.arrange(p1)
@@ -699,10 +700,11 @@ p2<-ggplot(LHS1.melted, aes(x=Year, y=value, by=variable, color=RSS)) +
   scale_colour_gradientn(name="RSS",colours=rainbow(5))+
   guides(color=guide_legend(override.aes=list(shape=c(NA,16),linetype=c(1,0))))+
   ylab(text.ylab) +
-  xlab(text.xlab) 
+  xlab(text.xlab) +
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 title.grob <- textGrob(label = "B)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = 0,gp = gpar(fontsize = 16))
 
 p2 <- arrangeGrob(p2, top = title.grob)
 grid.arrange(p2)
@@ -717,10 +719,11 @@ p3<-ggplot(LHS2.melted, aes(x=Year, y=value, by=variable, color=RSS)) +
   scale_colour_gradientn(name="RSS",colours=rainbow(5))+
   guides(color=guide_legend(override.aes=list(shape=c(NA,16),linetype=c(1,0))))+
   ylab("") +
-  xlab(text.xlab) 
+  xlab(text.xlab) +
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 title.grob <- textGrob(label = "C)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = 0,gp = gpar(fontsize = 16))
 
 p3 <- arrangeGrob(p3, top = title.grob)
 grid.arrange(p3)
@@ -735,10 +738,11 @@ p4<-ggplot(LHS3.melted, aes(x=Year, y=value, by=variable, color=RSS)) +
   scale_colour_gradientn(name="RSS",colours=rainbow(5))+
   guides(color=guide_legend(override.aes=list(shape=c(NA,16),linetype=c(1,0))))+
   ylab("") +
-  xlab(text.xlab) 
+  xlab(text.xlab) +
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 title.grob <- textGrob(label = "D)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = 0,gp = gpar(fontsize = 16))
 
 p4 <- arrangeGrob(p4, top = title.grob)
 grid.arrange(p4)
@@ -746,10 +750,22 @@ grid.arrange(p4)
 #layout w/legend at side 
 w <- 10; h <- 6
 
+#Not plot title
 lay<-rbind(c(1,1,1,1,1,2),c(1,1,1,1,1,3),c(4,4,5,5,6,6),c(4,4,5,5,6,6))
 LHS_NewChronic<-grid.arrange(p1,legend1,Datalegend,p2,p3,p4,layout_matrix=lay)
 ggsave(sprintf("LHS_NewChronic_RSSColor.pdf"), LHS_NewChronic, width=w, height=h)
 ggsave(sprintf("LHS_NewChronic_RSSColor.png"), LHS_NewChronic, width=w, height=h)
+
+#Include Plot Title
+w <- 10; h <- 7
+lay<-rbind(c(1,1,1,1,1,1),c(2,2,2,2,2,3),c(2,2,2,2,2,3),c(2,2,2,2,2,4),c(2,2,2,2,2,4),
+           c(5,5,6,6,7,7),c(5,5,6,6,7,7),c(5,5,6,6,7,7),c(5,5,6,6,7,7))
+LHS_NewChronic<-grid.arrange(grid.text("Web Figure 1. Model Fit to New Chronic HCV Cases Detected by Public Health
+Surveillance in Michigan among PWID Aged 15-30 Years",gp=gpar(fontsize=18, col="black")),
+                             p1,legend1,Datalegend,p2,p3,p4,layout_matrix=lay)
+LHS_NewChronic
+ggsave(sprintf("/Users/RGicquelais/Desktop/HCV/Draft/5th Draft/Figs/With titles (submitted)/LHS_NewChronic_RSSColor.pdf"), LHS_NewChronic, width=w, height=h)
+
 
 #### Plot of New Chronic Cases Fit to MDHHS Data (All, Color by Phi_i) #####
 summary(params$phi1)
@@ -1495,7 +1511,9 @@ p1<-ggplot(params) +
   scale_x_continuous(limits = c(1.8e-07,2.3e-05), breaks = c(0.000001,0.00001,0.00002))+
   scale_y_continuous(limits = c(0, 300), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
+
 
 #use to extract legend (side)
 p2<-ggplot(params) + 
@@ -1509,7 +1527,8 @@ p2<-ggplot(params) +
   scale_x_continuous(limits = c(1.8e-07,2.3e-05), breaks = c(0.000001,0.00001,0.00002))+
   scale_y_continuous(limits = c(0, 300), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 #beta: no legend
 text.xlab <- bquote(Days*~Years^-1*~Persons^-1)
@@ -1526,7 +1545,8 @@ p3<-ggplot(params) +
   scale_x_continuous(limits = c(1.8e-07,2.3e-05), breaks = c(0.000001,0.00001,0.00002))+
   scale_y_continuous(limits = c(0, 300), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 #phi1
 summary(params$phi1)
@@ -1545,7 +1565,8 @@ p4<-ggplot(params) +
   scale_x_log10()+
   scale_y_continuous(limits=c(0,1800), breaks=c(0,500,1000,1500), labels=c("0","500","1,000","1,500"))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 #phi2
 summary(params$phi2)
@@ -1562,7 +1583,8 @@ p5<-ggplot(params) +
   scale_x_log10(breaks=c(0.01,0.1,1,10),labels=c("0.01","0.1","1","10"))+
   scale_y_continuous(limits=c(0,805), breaks=c(0,200,400,600,800), labels=c("0","200","400","600","800"))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 #phi3
 summary(params$phi3)
@@ -1579,7 +1601,8 @@ p6<-ggplot(params) +
   scale_x_log10()+
   scale_y_continuous(limits=c(0,1500), breaks=c(0,500,1000,1500), labels=c("0","500","1,000","1,500"))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 #delta
 summary(params$d)
@@ -1596,7 +1619,8 @@ p7<-ggplot(params) +
   scale_x_continuous(limits = c(0.085,1.125), breaks = c(0.1, 0.5, 1.0))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 #k 
 summary(params$k) 
@@ -1613,7 +1637,8 @@ p8<-ggplot(params) +
   scale_x_continuous(limits = c(0.1,1), breaks = c(0.25, 0.5, 0.75,1), labels=c("0.25", "0.5", "0.75","1.0"))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 #r
 summary(params$r)
@@ -1630,7 +1655,8 @@ p9<-ggplot(params) +
   scale_x_continuous(limits = c(0.059,0.082), breaks = c(0.06, 0.07, 0.08))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #eps
@@ -1648,7 +1674,8 @@ p10<-ggplot(params) +
   scale_x_continuous(limits = c(0.9,1.3), breaks = c(1.0, 1.1, 1.2))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 
@@ -1667,7 +1694,8 @@ p11<-ggplot(params) +
   scale_x_continuous(limits = c(75,85), breaks = c(75, 80, 85))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #lambda1
@@ -1685,7 +1713,8 @@ p12<-ggplot(params) +
   scale_x_continuous(limits = c(0.9,1.6), breaks = c(1, 1.25, 1.5))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #lambda2
@@ -1703,7 +1732,8 @@ p13<-ggplot(params) +
   scale_x_continuous(limits = c(1.4,3.4), breaks = c(1.5, 2, 2.5, 3))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #Z0 (popsize of newly added 15 yo/yr)
@@ -1721,7 +1751,8 @@ p14<-ggplot(params) +
   scale_x_continuous(limits = c(133000,154000), breaks = c(133000,143000,153000), labels=c("133,000","143,000","153,000"))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #Contact Matrix: c11
@@ -1739,7 +1770,8 @@ p15<-ggplot(params) +
   scale_x_continuous(limits = c(4.1,17.6), breaks = c(5,10,15))+
   scale_y_continuous(limits = c(0, 400), breaks = c(0,100,200,300,400))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #Contact Matrix: c12
@@ -1757,7 +1789,8 @@ p16<-ggplot(params) +
   scale_x_continuous(limits = c(1.0,2.6), breaks = c(1.5,2.5))+
   scale_y_continuous(limits = c(0, 400), breaks = c(0,100,200,300,400))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #Contact Matrix: c13
@@ -1775,7 +1808,8 @@ p17<-ggplot(params) +
   scale_x_continuous(limits = c(0.3,1.2), breaks = c(0.5,1))+
   scale_y_continuous(limits = c(0, 400), breaks = c(0,100,200,300,400))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #Contact Matrix: c22
@@ -1793,7 +1827,8 @@ p18<-ggplot(params) +
   scale_x_continuous(limits = c(2.4,6.4), breaks = c(3,4,5,6))+
   scale_y_continuous(limits = c(0, 400), breaks = c(0,100,200,300,400))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #Contact Matrix: c23
@@ -1811,7 +1846,8 @@ p19<-ggplot(params) +
   scale_x_continuous(limits = c(1.0,3.3), breaks = c(1.5,2.5))+
   scale_y_continuous(limits = c(0, 400), breaks = c(0,100,200,300,400))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #Contact Matrix: c33
@@ -1829,7 +1865,8 @@ p20<-ggplot(params) +
   scale_x_continuous(limits = c(1.7,3.5), breaks = c(2,3))+
   scale_y_continuous(limits = c(0, 400), breaks = c(0,100,200,300,400))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #Crude Death Rate 1 (15-19)
@@ -1847,7 +1884,8 @@ p21<-ggplot(params) +
   scale_x_continuous(limits = c(46.3,64.3), breaks = c(50,60))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #Crude Death Rate 2 (20-24)
@@ -1865,7 +1903,8 @@ p22<-ggplot(params) +
   scale_x_continuous(limits = c(83.5,99.2), breaks = c(85,95))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #Crude Death Rate 3 (25-30)
@@ -1883,7 +1922,8 @@ p23<-ggplot(params) +
   scale_x_continuous(limits = c(104.9,125.9), breaks = c(85,95))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #SMR: Current PWID vs Non-PWID
@@ -1901,7 +1941,8 @@ p24<-ggplot(params) +
   scale_x_continuous(limits = c(2.5,15.5), breaks = c(5,10,15))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 
 #SMR: Former PWID vs Current
@@ -1919,7 +1960,8 @@ p25<-ggplot(params) +
   scale_x_continuous(limits = c(0.18,0.54), breaks = c(0.2,0.3,0.4,0.5))+
   scale_y_continuous(limits = c(0, 350), breaks = c(0,100,200,300))+
   ggtitle(text.title)+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 #RSS 
 summary(params$RSS)
@@ -1934,7 +1976,8 @@ p26<-ggplot(params) +
   xlab(text.xlab) +
   scale_x_continuous(limits = c(3,26), breaks = c(6,12,18,24))+
   ggtitle('Residual Sum of Squares')+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 #Saving main and supplemental figs
 
@@ -1962,6 +2005,15 @@ lay<-rbind(c(1,2,3), c(1,2,3), c(1,2,3), c(4,5,6), c(4,5,6), c(4,5,6),
 LHS_Histograms_All<-grid.arrange(p10,p12,p13,p9,p7,p8,p15,p16,p17,p18,p19,p20,mylegend,layout_matrix=lay)
 quartz.save ("LHS_Histograms_Grey.pdf", "pdf",width=w,height=h)
 
+#Main Figure with title
+lay<-rbind(c(1,1,1),c(2,3,4), c(2,3,4), c(2,3,4), c(5,6,7), c(5,6,7), c(5,6,7), 
+           c(8,9,10), c(8,9,10), c(8,9,10), c(11,12,13), c(11,12,13), c(11,12,13),
+           c(14,14,14))
+LHS_Histograms_All<-grid.arrange(grid.text("Web Figure 2. Latin Hypercube Sampling Parameter Ranges with Variable Fit to Surveillance Data throughout Sampled Range",
+                                           gp=gpar(fontsize=20, col="black")),
+                                 p10,p12,p13,p9,p7,p8,p15,p16,p17,p18,p19,p20,mylegend,layout_matrix=lay)
+quartz.save ("/Users/RGicquelais/Desktop/HCV/Draft/5th Draft/Figs/With titles (submitted)/Web Figure 2.pdf", "pdf",width=w,height=h)
+
 #Non-Uniformly Distributed Params
 
 w <- 20; h <- 9
@@ -1983,11 +2035,19 @@ quartz.save ("LHS_Histograms_contact_Grey.pdf", "pdf",width=w,height=h)
 w <- 20; h <- 12
 mylegend<-g_legend(p1)
 
+#no title
 lay<-rbind(c(1,2,3,4), c(1,2,3,4), c(1,2,3,4), c(5,6,7,8), c(5,6,7,8),c(5,6,7,8),c(9,10,11,12),c(9,10,11,12),c(9,10,11,12),c(13,13,13,13))
 options(device = "quartz")
 LHS_Histograms_supp<-grid.arrange(p3,p4,p5,p6,p11,p14,p24,p25,p21,p22,p23,p26,mylegend,layout_matrix=lay)
 quartz.save ("LHS_Histograms_supp_Grey.pdf", "pdf",width=w,height=h)
 
+#with title
+lay<-rbind(c(1,1,1,1), c(2,3,4,5), c(2,3,4,5), c(2,3,4,5), c(6,7,8,9), c(6,7,8,9),c(6,7,8,9),c(10,11,12,13),c(10,11,12,13),c(10,11,12,13),c(14,14,14,14))
+options(device = "quartz")
+LHS_Histograms_supp<-grid.arrange(grid.text("Web Figure 3. Fitted Parameters and Parameters with Consistent Fit to Surveillance Data throughout the Latin Hypercube Sampled Range",
+                                            gp=gpar(fontsize=20, col="black")),
+                                  p3,p4,p5,p6,p11,p14,p24,p25,p21,p22,p23,p26,mylegend,layout_matrix=lay)
+quartz.save ("/Users/RGicquelais/Desktop/HCV/Draft/5th Draft/Figs/With titles (submitted)/Web Figure 3.pdf", "pdf",width=w,height=h)
 
 #### Statistical testing of parameter distributions/means #### 
 
@@ -2299,7 +2359,8 @@ leg<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1:6,8)&s
   theme(legend.position = "bottom", legend.key = element_rect(colour = 'black'),axis.ticks.x=element_blank()) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
   ylab(text.ylab) +
-  xlab("") 
+  xlab("") +
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 leg
 
 #None, Prevalence
@@ -2317,10 +2378,11 @@ p1<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1)&single
   ylab(text.ylab) +
   xlab("")+
   ggtitle("None")+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 title.grob <- textGrob(label = "A)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = -0.5,gp = gpar(fontsize = 16))
 
 p1 <- arrangeGrob(p1, top = title.grob)
 grid.arrange(p1)
@@ -2340,10 +2402,11 @@ p2<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(2)&single
   ylab("") +
   xlab("")+
   ggtitle("Primary")+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 title.grob <- textGrob(label = "  ",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = -0.5,gp = gpar(fontsize = 16))
 
 p2 <- arrangeGrob(p2, top = title.grob)
 grid.arrange(p2)
@@ -2362,7 +2425,8 @@ p3<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(3:5)&sing
   ylab("") +
   xlab("")+
   ggtitle("Secondary")+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 p3
 
 p3 <- arrangeGrob(p3, top = title.grob)
@@ -2383,7 +2447,8 @@ p4<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(6,8)&sing
   ylab("") +
   xlab("")+
   ggtitle("Tertiary")+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 p4 <- arrangeGrob(p4, top = title.grob)
 grid.arrange(p4)
@@ -2403,10 +2468,11 @@ p5<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1)&single
   ylab(text.ylab) +
   xlab("") +
   ggtitle("None")+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 title.grob <- textGrob(label = "B)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = -0.5,gp = gpar(fontsize = 16))
 
 p5 <- arrangeGrob(p5, top = title.grob)
 grid.arrange(p5)
@@ -2427,11 +2493,12 @@ p6<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(2)&single
   ylab("") +
   xlab("") +
   ggtitle("Primary")+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 p6
 
 title.grob <- textGrob(label = "  ",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = -0.5,gp = gpar(fontsize = 16))
 
 p6 <- arrangeGrob(p6, top = title.grob)
 grid.arrange(p6)
@@ -2451,7 +2518,8 @@ p7<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(3:5)&sing
   ylab("") +
   xlab("") +
   ggtitle("Secondary")+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 p7
 
 p7 <- arrangeGrob(p7, top = title.grob)
@@ -2472,13 +2540,16 @@ p8<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(6,8)&sing
   ylab("") +
   xlab("") +
   ggtitle("Tertiary")+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 p8
 
 p8 <- arrangeGrob(p8, top = title.grob)
 grid.arrange(p8)
 
 mylegend<-g_legend(leg)
+
+#Main Violin Plot Figure: No Title
 w <- 22; h <- 8
 lay<-rbind(c(1,1,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4), c(1,1,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4), 
            c(1,1,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4),c(5,5,6,6,6,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8),
@@ -2486,6 +2557,16 @@ lay<-rbind(c(1,1,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4), c(1,1,2,2,2,3,3,3,3,3,3,3
            c(9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9))
 SingleStrategy_VP_main<-grid.arrange(p1,p2,p3,p4,p5,p6,p7,p8,mylegend,layout_matrix=lay)
 ggsave(sprintf("SingleStrategy_VP_main_Best50.pdf"), SingleStrategy_VP_main, width=w, height=h)
+
+w <- 22; h <- 8
+lay<-rbind(c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+           c(2,2,3,3,3,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5), c(2,2,3,3,3,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5),c(2,2,3,3,3,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5),
+           c(6,6,7,7,7,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9), c(6,6,7,7,7,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9),c(6,6,7,7,7,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9),
+           c(10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10))
+SingleStrategy_VP_main<-grid.arrange(grid.text("Figure 2. Counterfactual Simulation of Single Interventions",
+                                               gp=gpar(fontsize=18, col="black")),
+                        p1,p2,p3,p4,p5,p6,p7,p8,mylegend,layout_matrix=lay)
+ggsave(sprintf("/Users/RGicquelais/Desktop/HCV/Draft/5th Draft/Figs/With titles (submitted)/Figure 2.pdf"), SingleStrategy_VP_main, width=w, height=h)
 
 #Supplemental plot with mortality reduction, decreased treatment duration
 #X labels
@@ -2505,10 +2586,11 @@ p1<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1,7,9,10,
   theme(legend.position = "none", legend.key = element_rect(colour = 'black'),axis.ticks.x=element_blank()) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
   ylab(text.ylab) +
-  xlab("") 
+  xlab("") +
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 title.grob <- textGrob(label = "A)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = -0.5,gp = gpar(fontsize = 16))
 
 p1 <- arrangeGrob(p1, top = title.grob)
 grid.arrange(p1)
@@ -2525,19 +2607,28 @@ p2<-ggplot(subset(singleint,singleint$best50==1&singleint$order %in% c(1,3,9,10,
   theme(legend.position = "none", legend.key = element_rect(colour = 'black')) +
   guides(fill = guide_legend(override.aes = list(colour = NA))) + 
   ylab(text.ylab) +
-  xlab(text.xlab) 
+  xlab(text.xlab) +
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 title.grob <- textGrob(label = "B)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = -0.5,gp = gpar(fontsize = 16))
 
 p2 <- arrangeGrob(p2, top = title.grob)
 grid.arrange(p2)
 
+#No title
 w <- 18; h <- 8
 lay<-rbind(c(1),c(1),c(1),c(2),c(2),c(2),c(3))
 SingleStrategy_VP_supp<-grid.arrange(p1,p2,mylegend,layout_matrix=lay)
 ggsave(sprintf("SingleStrategy_VP_supp_Best50.pdf"), SingleStrategy_VP_supp, width=w, height=h)
 
+#With title
+w <- 18; h <- 9
+lay<-rbind(c(1),c(2),c(2),c(2),c(3),c(3),c(3),c(4))
+SingleStrategy_VP_supp<-grid.arrange(grid.text("Web Figure 4. Sensitivity of Single Interventions to Decreased PWID Mortality and Decreased Treatment Duration",
+                                               gp=gpar(fontsize=18, col="black")),
+                                     p1,p2,mylegend,layout_matrix=lay)
+ggsave(sprintf("/Users/RGicquelais/Desktop/HCV/Draft/5th Draft/Figs/With titles (submitted)/Web Figure 4.pdf"), SingleStrategy_VP_supp, width=w, height=h)
 
 #### Line Graphs of Best 50% Primary/Tertiary Sequential Interventions ####
 
@@ -2808,7 +2899,8 @@ p1<-ggplot(data=subset(int,inttype=="terttoprim"),aes(y=as.factor(intono-1), x=p
                                           "+Increase Cessation ", "+Decrease Contacts ",
                                           "+Decrease Initiation  "))+ 
   scale_x_continuous(limits=c(-70,100),breaks=c(-50,0,50,100),
-                     labels=c("-50","0","50","100"))
+                     labels=c("-50","0","50","100"))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 p1
 
@@ -2833,11 +2925,12 @@ p3<-ggplot(data=subset(int,inttype=="terttoprim"),aes(y=as.factor(intono-1), x=p
                                           "+Increase Cessation ", "+Decrease Contacts ",
                                           "+Decrease Initiation  "))+ 
   scale_x_continuous(limits=c(-70,100),breaks=c(-50,0,50,100),
-                     labels=c("-50","0","50","100"))
+                     labels=c("-50","0","50","100"))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 p3
 title.grob <- textGrob(label = "D)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = -0.5,gp = gpar(fontsize = 16))
 
 p3 <- arrangeGrob(p3, top = title.grob)
 grid.arrange(p3)
@@ -2863,10 +2956,11 @@ p4<-ggplot(data=subset(int,inttype=="terttoprim"),aes(y=as.factor(intono-1), x=p
                                           "+Increase Cessation ", "+Decrease Contacts ",
                                           "+Decrease Initiation  "))+ 
   scale_x_continuous(limits=c(-70,100),breaks=c(-50,0,50,100),
-                     labels=c("-50","0","50","100"))
+                     labels=c("-50","0","50","100"))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 title.grob <- textGrob(label = "B)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = -0.5,gp = gpar(fontsize = 16))
 
 p4 <- arrangeGrob(p4, top = title.grob)
 grid.arrange(p4)
@@ -2892,11 +2986,12 @@ p5<-ggplot(data=subset(int,inttype=="primtotert"),aes(y=as.factor(intono-1), x=p
                                           "+Increase Cessation ", "+Decrease Relapse  ",
                                           "+Treat Current PWID","+Treat Former PWID"))+ 
   scale_x_continuous(limits=c(-70,100),breaks=c(-50,0,50,100),
-                     labels=c("-50","0","50","100"))
+                     labels=c("-50","0","50","100"))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 p5
 title.grob <- textGrob(label = "C)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = -0.5,gp = gpar(fontsize = 16))
 
 p5 <- arrangeGrob(p5, top = title.grob)
 grid.arrange(p5)
@@ -2922,19 +3017,30 @@ p6<-ggplot(data=subset(int,inttype=="primtotert"),aes(y=as.factor(intono-1), x=p
                                           "+Increase Cessation ", "+Decrease Relapse  ",
                                           "+Treat Current PWID","+Treat Former PWID"))+ 
   scale_x_continuous(limits=c(-70,100),breaks=c(-50,0,50,100),
-                     labels=c("-50","0","50","100"))
+                     labels=c("-50","0","50","100"))+
+  theme(plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm"))
 
 title.grob <- textGrob(label = "A)",x = unit(0, "lines"), y = unit(0, "lines"),
-                       hjust = 0, vjust = 0,gp = gpar(fontsize = 16))
+                       hjust = -1, vjust = -0.5,gp = gpar(fontsize = 16))
 
 p6 <- arrangeGrob(p6, top = title.grob)
 grid.arrange(p6)
 
+#no title
 w <- 10; h <- 6.5
 legendpoint<-g_legend(p1)
 lay<-rbind(c(1,2),c(1,2),c(1,2),c(1,2),c(1,2),c(1,2),c(3,4),c(3,4),c(3,4),c(3,4),c(3,4),c(3,4),c(5,5))
 Multi_Sequential_ranges<-grid.arrange(p6,p4,p5,p3,legendpoint,layout_matrix=lay)
 ggsave(sprintf("Multi_Sequential_h=k=1_joyplot_Best50.pdf"), Multi_Sequential_ranges, width=w, height=h)
+
+#with title
+w <- 10; h <- 6.5
+legendpoint<-g_legend(p1)
+lay<-rbind(c(1,1),c(2,3),c(2,3),c(2,3),c(2,3),c(2,3),c(2,3),
+           c(4,5),c(4,5),c(4,5),c(4,5),c(4,5),c(4,5),c(6,6))
+Multi_Sequential_ranges<-grid.arrange(grid.text("Figure 3. Counterfactual Simulation of Combined Interventions",
+                                                gp=gpar(fontsize=18, col="black")),p6,p4,p5,p3,legendpoint,layout_matrix=lay)
+ggsave(sprintf("/Users/RGicquelais/Desktop/HCV/Draft/5th Draft/Figs/With titles (submitted)/Figure 3.pdf"), Multi_Sequential_ranges, width=w, height=h)
 
 #### Describe sequential results w/high impact of tert to primary on new chronic####
 examine<-subset(seqint,h==1&inttype=="terttoprim"&pct!="None"&pctred_new>=10&e==c(120,121,122,123))
