@@ -730,7 +730,7 @@ N0=reshape(N0,27,1);
        
     [t,x] = ode15s(@HCV_DiffEq_04202017,time1,N0,[],paramnew,nu,c);
             
-% Save Output 
+% Save OutputÂ 
 
 % Total Cases;
  Y_newchronic_pwid = paramnew(13)*(2*paramnew(11)*x(:,6)+2*paramnew(11)*x(:,15)+2*paramnew(11)*x(:,24));
