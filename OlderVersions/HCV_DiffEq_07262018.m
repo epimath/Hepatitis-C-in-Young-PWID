@@ -17,8 +17,8 @@ pi=reshape(pi,4,4);
 %          5 6  7:10   11 12  13:16     17   18   19   20:23      24:27   28:31
 %
 %          mu(1:4) xi omic(1:4) r  tau phip phin psi(1:4) psin w  intervention_etap Z0];
-%          32:35   36 37:40     41 42  43   44   45:48    49   50          51       52  
-%         
+%Â  Â  Â  Â  Â  32:35   36 37:40     41 42  43   44   45:48    49   50          51       52  
+%Â  Â  Â  Â  Â 
 % The inverse of age group size is in vector nu:
     % nu = [nu1,nu2,nu3,nu4];
 
